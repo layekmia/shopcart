@@ -25,7 +25,7 @@ const socialLink = [
 ]
 
 export default function SocialMedia({ className, iconClassName, tooltipClassName }: Props) {
-   
+
    return (
       <TooltipProvider>
          <div className={cn("flex items-center gap-3.5", className)}>
@@ -36,7 +36,7 @@ export default function SocialMedia({ className, iconClassName, tooltipClassName
                         {item?.icon}
                      </Link>
                   </TooltipTrigger>
-                  <TooltipContent className={cn("")}>
+                  <TooltipContent className={cn("", tooltipClassName)}>
                      {item?.title}
                   </TooltipContent>
                </Tooltip>)}
