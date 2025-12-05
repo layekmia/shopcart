@@ -1,14 +1,9 @@
 import Container from "@/components/Container";
-import { Button } from "@/components/ui/button";
-
+import HomeBanner from "@/components/HomeBanner";
 export default function Home() {
   return (
-    <div>
-      <Container>
-        <div>Home
-          <Button variant="secondary" size="lg">Check out</Button>
-        </div>
-      </Container>
-    </div>
+    <Container>
+      <HomeBanner />
+    </Container>
   )
 }
