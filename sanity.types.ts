@@ -413,3 +413,36 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes = Blogcategory | Slug | Blog | BlockContent | SanityImageCrop | SanityImageHotspot | Author | Order | Product | Brand | Category | Banner | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/queries/query.ts
+// Variable: BRANDS_QUERY
+// Query: *[_type=='brand'] | order(title asc)
+export type BRANDS_QUERYResult = Array<{
+  _id: string;
+  _type: "brand";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  string?: string;
+  slug?: Slug;
+  description?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "*[_type=='brand'] | order(title asc)": BRANDS_QUERYResult;
+  }
+}

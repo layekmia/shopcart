@@ -2,15 +2,20 @@ import Container from "@/components/Container";
 import HomeBanner from "@/components/HomeBanner";
 import HomeCategories from "@/components/HomeCategories";
 import ProductGrid from "@/components/ProductGrid";
-export default function Home() {
+import ShopByBrand from "@/components/ShopByBrand";
+import { getCategories } from "@/sanity/queries";
+export default async function Home() {
+  const categories = await getCategories(6);
+
   return (
     <div>
       <Container>
         <HomeBanner />
         <div className="py-10">
-        <ProductGrid/>
+          <ProductGrid />
         </div>
-        <HomeCategories/>
+        <HomeCategories categories={categories} />
+        <ShopByBrand/>
       </Container>
     </div>
   );
