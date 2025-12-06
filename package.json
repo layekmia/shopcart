@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typegen": "npx sanity@latest schema extract && npx sanity@latest typegen generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.35.6",
@@ -23,12 +24,14 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.20.3",
+    "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "has-flag": "^5.0.1",
     "lucide-react": "^0.555.0",
+    "motion": "^12.23.25",
     "next": "16.0.7",
     "next-sanity": "^11.6.10",
     "react": "19.2.0",
