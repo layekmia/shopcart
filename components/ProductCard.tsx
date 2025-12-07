@@ -8,8 +8,7 @@ import Title from "./ui/text";
 import PriceView from "./PriceView";
 import AddToCartButton from "./AddToCartButton";
 
-export default function ProductCard({ product }: { product: Product }) {
-  console.log(product.categories);
+export default function ProductCard({ product }: { product: Product }) { 
   return (
     <div className="text-sm border border-dark_blue/20 rounded-md bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">

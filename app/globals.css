@@ -17,6 +17,7 @@
   --color-lightOrange: #fca99b;
   --color-dark_blue:#6c7fd8;
   --color-shop_light_text:#686e7d;
+  --color-deal-bg: #f1f3f8
 }
 
 @theme inline {
