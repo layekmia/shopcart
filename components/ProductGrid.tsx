@@ -5,11 +5,11 @@ import HomeTabBar from "./HomeTabBar";
 import { productType } from "@/constants/data";
 import { client } from "@/sanity/lib/client";
 import NoProductAvailable from "./NoProductAvailable";
-import { Loader2 } from "lucide-react";
 import ProductCard from "./ProductCard";
 import { motion } from "motion/react";
 import { AnimatePresence } from "motion/react";
 import { Product } from "@/sanity.types";
+import ProductLoadingSpinner from "./ProductLoadingSpinner";
 
 export default function ProductGrid() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -41,12 +41,7 @@ export default function ProductGrid() {
     <div>
       <HomeTabBar selectedTab={selectedTab} onTabSelected={setSelectedTab} />
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-10 min-h-80 gap-4 w-full mt-10">
-          <div className="space-x-2  flex items-center ">
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Product is loading...</span>
-          </div>
-        </div>
+        <ProductLoadingSpinner>Loading Products...</ProductLoadingSpinner>
       ) : products?.length ? (
         <div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">

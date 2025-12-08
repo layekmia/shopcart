@@ -10,6 +10,7 @@ import NoProductAvailable from "./NoProductAvailable";
 import ProductCard from "./ProductCard";
 import { motion } from "motion/react";
 import { AnimatePresence } from "motion/react";
+import ProductLoadingSpinner from "./ProductLoadingSpinner";
 
 interface Props {
   categories: Category[];
@@ -65,12 +66,7 @@ export default function CategoryProduct({ categories, slug }: Props) {
       </div>
       <div className="flex-1">
         {loading && (
-          <div className="flex flex-col items-center justify-center py-10 min-h-80 gap-4 w-full mt-10">
-            <div className="space-x-2  flex items-center ">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Product is loading...</span>
-            </div>
-          </div>
+          <ProductLoadingSpinner>Loading Products...</ProductLoadingSpinner>
         )}
         {products.length > 0 ? (
           <div>

@@ -422,7 +422,7 @@ export type BRANDS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  string?: string;
+  title?: string;
   slug?: Slug;
   description?: string;
   image?: {

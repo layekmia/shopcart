@@ -141,3 +141,7 @@
     @apply hover:cursor-pointer
   }
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
