@@ -56,7 +56,6 @@ export default function Shop({ categories, brands }: props) {
         { next: { revalidate: 0 } }
       );
       setProducts(data);
-      console.log(data);
     } catch (error) {
       console.error("Failed to fetch products:", (error as Error).message);
     } finally {

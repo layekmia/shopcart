@@ -1,6 +1,6 @@
 import AddToCartButton from "@/components/AddToCartButton";
 import Container from "@/components/Container";
-import FavoriteButton from "@/components/FavoriteButton";
+import FavoriteButton from "@/components/WishlistIcon";
 import ImageView from "@/components/ImageView";
 import PriceView from "@/components/PriceView";
 import ProductCharacteristics from "@/components/ProductCharacteristics";
@@ -11,6 +11,7 @@ import { FaRegQuestionCircle } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { RxBorderSplit } from "react-icons/rx";
 import { TbTruckDelivery } from "react-icons/tb";
+import AddToWishlistButton from "@/components/AddToWishlistButton";
 
 const SingleProductPage = async ({
   params,
@@ -19,6 +20,10 @@ const SingleProductPage = async ({
 }) => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
+
+  if (!product) {
+    notFound();
+  }
 
   return (
     <Container className="flex flex-col md:flex-row gap-10 py-10">
@@ -57,7 +62,10 @@ const SingleProductPage = async ({
         </div>
         <div className="flex items-center gap-2.5 lg:gap-3">
           <AddToCartButton product={product} />
-          <FavoriteButton />
+          <AddToWishlistButton
+            className="relative top-0 right-0"
+            product={product}
+          />
         </div>
         <ProductCharacteristics product={product} />
         <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-b-gray-200 py-5 -mt-2">

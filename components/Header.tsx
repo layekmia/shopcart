@@ -1,13 +1,13 @@
 import { currentUser } from "@clerk/nextjs/server";
 import CartIcon from "./CartIcon";
 import Container from "./Container";
-import FavoriteButton from "./FavoriteButton";
 import HeaderMenu from "./HeaderMenu";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import SearchBar from "./SearchBar";
 import SignIn from "./SignIn";
 import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
+import WishlistIcon from "./WishlistIcon";
 
 export default async function Header() {
   const user = await currentUser();
@@ -24,7 +24,7 @@ export default async function Header() {
         <div className="w-1/3 flex items-center justify-end gap-5">
           <SearchBar />
           <CartIcon />
-          <FavoriteButton />
+          <WishlistIcon />
           <ClerkLoaded>
             <SignedIn>
               <UserButton />
