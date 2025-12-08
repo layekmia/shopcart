@@ -7,21 +7,24 @@ import AddToWishlistButton from "./AddToWishlistButton";
 import Title from "./ui/text";
 import PriceView from "./PriceView";
 import AddToCartButton from "./AddToCartButton";
+import Link from "next/link";
 
-export default function ProductCard({ product }: { product: Product }) { 
+export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="text-sm border border-dark_blue/20 rounded-md bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">
         {product?.images && (
-          <Image
-            src={urlFor(product?.images[0]).url()}
-            alt="Product Image"
-            loading="lazy"
-            width={700}
-            height={700}
-            className={`w-full h-64 object-contain overflow-hidden transition-transform bg-shop_light_bg hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
-            unoptimized
-          />
+          <Link href={`/product/${product?.slug?.current}`}>
+            <Image
+              src={urlFor(product?.images[0]).url()}
+              alt="Product Image"
+              loading="lazy"
+              width={700}
+              height={700}
+              className={`w-full h-64 object-contain overflow-hidden transition-transform bg-shop_light_bg hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
+              unoptimized
+            />
+          </Link>
         )}
         <AddToWishlistButton product={product} />
         <StatusBadge status={product?.status} />
@@ -32,7 +35,9 @@ export default function ProductCard({ product }: { product: Product }) {
             {product?.categories?.join(",")}
           </p>
         )}
-        <Title className="text-sm line-clamp-1">{product?.name}</Title>
+        <Link href={`/product/${product?.slug?.current}`}>
+          <Title className="text-sm line-clamp-1">{product?.name}</Title>
+        </Link>
         <div className="flex items-center gap-2">
           <div className="flex items-center">
             {Array.from({ length: 5 }).map((_, index) => (
@@ -62,7 +67,7 @@ export default function ProductCard({ product }: { product: Product }) {
           price={product?.price as number}
           discount={product?.discount}
         />
-        <AddToCartButton product={product} className="w-36 rounded-full"/>
+        <AddToCartButton product={product} className="w-36 rounded-full" />
       </div>
     </div>
   );

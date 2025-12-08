@@ -12,4 +12,18 @@ const DEAL_PRODUCTS =
   defineQuery(`*[_type == 'product' && status == 'hot'] | order(name asc){
   ...,"category":categories[]->title}`);
 
-export { BRANDS_QUERY, LATEST_BLOG_QUERY, DEAL_PRODUCTS };
+const PRODUCT_BY_SLUG_QUERY = defineQuery(
+  `*[_type == "product" && slug.current == $slug][0]`
+);
+
+const BRAND_QUERY = defineQuery(`*[_type == "product" && slug.current == $slug]{
+  "brandName": brand->title
+  }`);
+
+export {
+  BRANDS_QUERY,
+  LATEST_BLOG_QUERY,
+  DEAL_PRODUCTS,
+  PRODUCT_BY_SLUG_QUERY,
+  BRAND_QUERY
+};

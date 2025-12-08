@@ -8,7 +8,7 @@ export default function HeaderMenu() {
     const pathname = usePathname()
 
     return (
-        <div className="hidden md:inline-flex w-1/3 items-center gap-7 text-sm capitalize font-semibold text-lightColor">
+        <div className="hidden justify-center md:inline-flex w-1/3 items-center gap-7 text-sm capitalize font-semibold text-lightColor">
             {headerData.map(item => <Link className={`hover:text-shop_light_green hoverEffect relative group ${pathname === item?.href && 'text-shop_light_green'}`} href={item.href} key={item.label}>
 
                 {item?.label}

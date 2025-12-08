@@ -9,7 +9,7 @@ export default function AddToCartButton({
   product,
   className,
 }: {
-  product: Product;
+  product: Product | undefined | null;
   className?: string;
 }) {
   const isOutStock = product?.stock === 0;
