@@ -8,7 +8,6 @@ import Title from "./ui/text";
 import PriceView from "./PriceView";
 import AddToCartButton from "./AddToCartButton";
 import Link from "next/link";
-import ProductSideMenu from "./ProductSideMenu";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (

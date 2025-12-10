@@ -13,6 +13,22 @@
  */
 
 // Source: schema.json
+export type Address = {
+  _id: string;
+  _type: "address";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  default?: boolean;
+  createdAt?: string;
+};
+
 export type Blogcategory = {
   _id: string;
   _type: "blogcategory";
@@ -411,7 +427,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Blogcategory | Slug | Blog | BlockContent | SanityImageCrop | SanityImageHotspot | Author | Order | Product | Brand | Category | Banner | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Address | Blogcategory | Slug | Blog | BlockContent | SanityImageCrop | SanityImageHotspot | Author | Order | Product | Brand | Category | Banner | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/queries/query.ts
 // Variable: BRANDS_QUERY
@@ -422,7 +438,7 @@ export type BRANDS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  string?: string;
   slug?: Slug;
   description?: string;
   image?: {

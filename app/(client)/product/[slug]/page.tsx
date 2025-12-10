@@ -1,6 +1,5 @@
 import AddToCartButton from "@/components/AddToCartButton";
 import Container from "@/components/Container";
-import FavoriteButton from "@/components/WishlistIcon";
 import ImageView from "@/components/ImageView";
 import PriceView from "@/components/PriceView";
 import ProductCharacteristics from "@/components/ProductCharacteristics";
@@ -28,7 +27,9 @@ const SingleProductPage = async ({
   return (
     <Container className="flex flex-col md:flex-row gap-10 py-10">
       {product?.images && (
-        <ImageView images={product?.images} isStock={product?.stock} />
+        <div className="w-full md:w-1/2">
+          <ImageView images={product?.images} isStock={product?.stock} />
+        </div>
       )}
       <div className="w-full md:w-1/2 flex flex-col gap-5">
         <div className="space-y-1">

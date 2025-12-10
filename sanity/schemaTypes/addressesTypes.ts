@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 
 export const addressType = defineType({
   name: "address",
-  title: "addresss",
+  title: "addresses",
   type: "document",
   icon: HomeIcon,
   fields: [
@@ -18,13 +18,6 @@ export const addressType = defineType({
       name: "email",
       title: "User Email",
       type: "email",
-    }),
-    defineField({
-      name: "address",
-      title: "Street Address",
-      type: "string",
-      description: "The street address including apartment/unit number",
-      validation: (Rule) => Rule.required().min(5).max(50),
     }),
     defineField({
       name: "address",
