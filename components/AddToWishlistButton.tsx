@@ -23,7 +23,7 @@ export default function AddToWishlistButton({
   const handleToggle = () => {
     if (isFavorite) {
       removeFavoriteProduct(product._id);
-      toast.success(`${product.name?.slice(0, 12)}.. removed from wishlist`);
+      toast.error(`${product.name?.slice(0, 12)}.. removed from wishlist`);
     } else {
       addFavoriteProduct(product);
       toast.success(`${product.name?.slice(0, 12)}.. added to wishlist`);

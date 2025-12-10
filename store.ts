@@ -18,6 +18,7 @@ interface StoreState {
 
   getTotalPrice: () => number;
   getSubTotalPrice: () => number;
+  getTotalDiscount: () => number;
   getItemCount: (productId: string) => number;
   getGroupedItems: () => CartItem[];
 
@@ -149,19 +150,33 @@ const useStore = create<StoreState>()(
           state.items = state.items.filter((i) => i.product._id !== productId);
         }),
 
-      resetCart: () => set((state) => (state.items = [])),
-
-      getTotalPrice: () =>
-        get().items.reduce(
-          (t, item) => t + item.quantity * (item.product.price ?? 0),
-          0
-        ),
-
+      resetCart: () =>
+        set((state) => {
+          state.items = [];
+        }),
+      // Subtotal = full price of items, ignoring discount
       getSubTotalPrice: () =>
-        get().items.reduce(
-          (t, item) => t + item.quantity * (item.product.price ?? 0),
-          0
-        ),
+        get().items.reduce((total, item) => {
+          const price = item.product.price ?? 0;
+          return total + price * item.quantity;
+        }, 0),
+
+      // Total = actual total after applying discount
+      getTotalPrice: () =>
+        get().items.reduce((total, item) => {
+          const price = item.product.price ?? 0;
+          const discount = ((item.product.discount ?? 0) * price) / 100;
+          const finalPrice = price - discount; // discounted price
+          return total + finalPrice * item.quantity;
+        }, 0),
+
+      // Optional: total discount for frontend display
+      getTotalDiscount: () =>
+        get().items.reduce((total, item) => {
+          const price = item.product.price ?? 0;
+          const discount = ((item.product.discount ?? 0) * price) / 100;
+          return total + discount * item.quantity;
+        }, 0),
 
       getItemCount: (productId) => {
         const item = get().items.find((item) => item.product._id === productId);
@@ -189,7 +204,9 @@ const useStore = create<StoreState>()(
         }),
 
       resetFavoriteProducts: () =>
-        set((state) => void (state.favoriteProducts = [])),
+        set((state) => {
+          state.favoriteProducts = [];
+        }),
     })),
     { name: "cart-store" }
   )

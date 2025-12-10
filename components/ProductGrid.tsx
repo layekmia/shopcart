@@ -40,9 +40,9 @@ export default function ProductGrid() {
   return (
     <div>
       <HomeTabBar selectedTab={selectedTab} onTabSelected={setSelectedTab} />
-      {loading ? (
+      {loading || products === null? (
         <ProductLoadingSpinner>Loading Products...</ProductLoadingSpinner>
-      ) : products?.length ? (
+      ) : products?.length > 0? (
         <div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
             {products.map((product) => (
