@@ -1,8 +1,8 @@
-import { Category } from "@/sanity.types";
 import Title from "./ui/text";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import { Category } from "@/sanity.types";
 
 export default function HomeCategories({
   categories,
@@ -30,7 +30,6 @@ export default function HomeCategories({
                     width={500}
                     height={500}
                     className="w-full h-full object-contain hover:scale-105 hoverEffect"
-                    
                   />
                 </Link>
               </div>
