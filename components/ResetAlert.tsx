@@ -11,21 +11,20 @@ import {
 import toast from "react-hot-toast";
 
 interface Props {
-  resetCart: () => void;
+  onReset: () => void;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  title: string;
+  details: string;
 }
 
-const CartResetAlert = ({ resetCart, isOpen, setIsOpen }: Props) => {
+const ResetAlert = ({ onReset, isOpen, setIsOpen, title, details }: Props) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Reset Your Cart?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to reset your cart? This action cannot be
-            undone.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{details}</AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
@@ -37,7 +36,7 @@ const CartResetAlert = ({ resetCart, isOpen, setIsOpen }: Props) => {
             <button
               className="bg-red-600 text-white hover:bg-red-700"
               onClick={() => {
-                resetCart();
+                onReset();
                 toast.success("Cart reset successfully");
                 setIsOpen(false);
               }}
@@ -51,4 +50,4 @@ const CartResetAlert = ({ resetCart, isOpen, setIsOpen }: Props) => {
   );
 };
 
-export default CartResetAlert;
+export default ResetAlert;

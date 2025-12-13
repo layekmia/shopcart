@@ -1,7 +1,6 @@
 "use client";
 
 import AddToWishlistButton from "@/components/AddToWishlistButton";
-import CartResetAlert from "@/components/CartResetAlert";
 import Container from "@/components/Container";
 import EmptyCart from "@/components/EmptyCart";
 import NoAccess from "@/components/NoAccess";
@@ -25,14 +24,25 @@ import { urlFor } from "@/sanity/lib/image";
 import useStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { ShoppingBag, Trash } from "lucide-react";
-import Error from "next/error";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import ResetAlert from "@/components/ResetAlert";
+
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  createCheckoutSession,
+  Metadata,
+} from "@/actions/createCheckoutSession";
 
 export default function CartPage() {
-  const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -73,6 +83,29 @@ export default function CartPage() {
   useEffect(() => {
     fetchAddress();
   }, []);
+
+  const handleCheckout = async () => {
+    console.log("hello");
+    setLoading(true);
+    try {
+      const metadata: Metadata = {
+        orderNumber: crypto.randomUUID(),
+        customerName: user?.fullName ?? "Anonymous",
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Anonymous",
+        clerkUserId: user?.id,
+        address: selectedAddress,
+      };
+      const checkoutUrl = await createCheckoutSession(getGroupItems, metadata);
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (err) {
+      console.log("Checkout session error ", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-gray-50 pb-52 md:pb-10">
@@ -214,7 +247,11 @@ export default function CartPage() {
                             amount={getTotalPrice()}
                           />
                         </div>
-                        <Button className="w-full bg-shop_dark_green/80 hover:bg-shop_dark_green rounded-full font-semibold tracking-wide hoverEffect">
+                        <Button
+                          disabled={loading}
+                          onClick={handleCheckout}
+                          className="w-full bg-shop_dark_green/80 hover:bg-shop_dark_green rounded-full font-semibold tracking-wide hoverEffect"
+                        >
                           {loading ? "Please wait..." : "Proceed to checkout"}
                         </Button>
                       </div>
@@ -222,7 +259,7 @@ export default function CartPage() {
                   </div>
 
                   {/* address */}
-                  <div>
+                  <div className="max-md:hidden">
                     {addresses && (
                       <div>
                         <Card className="bg-white rounded-md mt-5">
@@ -247,7 +284,9 @@ export default function CartPage() {
                                     htmlFor={address?._id}
                                     className="grid gap-1.5 flex-1"
                                   >
-                                    <span className="font-semibold">{address?.name}</span>
+                                    <span className="font-semibold">
+                                      {address?.name}
+                                    </span>
                                     <span className="text-sm text-black/60">
                                       {address?.address}
                                       {address?.city}
@@ -257,25 +296,115 @@ export default function CartPage() {
                                 </div>
                               ))}
                             </RadioGroup>
-                            <Button variant={`outline`} className="w-full mt-4">Add New Address+</Button>
+                            <Button variant={`outline`} className="w-full mt-4">
+                              Add New Address+
+                            </Button>
                           </CardContent>
                         </Card>
                       </div>
                     )}
                   </div>
+                  {/* Mobile Address Button */}
+                  <div className="md:hidden px-4 mt-4">
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className="w-full font-medium"
+                        >
+                          Select Delivery Address
+                        </Button>
+                      </SheetTrigger>
+
+                      <SheetContent
+                        side="bottom"
+                        className="p-4 h-[70vh] overflow-y-auto"
+                      >
+                        <SheetHeader>
+                          <SheetTitle className="text-lg font-semibold">
+                            Delivery Address
+                          </SheetTitle>
+                        </SheetHeader>
+
+                        <div className="mt-4">
+                          <RadioGroup
+                            defaultValue={defaultAddress?._id.toString()}
+                          >
+                            {addresses?.map((address) => (
+                              <div
+                                onClick={() => setSelectedAddress(address)}
+                                key={address?._id}
+                                className={`flex items-center space-x-3 mb-4 cursor-pointer p-3 rounded-md border 
+                ${selectedAddress?._id === address?._id ? "border-shop_dark_green bg-shop_dark_green/5" : ""}
+              `}
+                              >
+                                <RadioGroupItem
+                                  value={address?._id.toString()}
+                                />
+                                <div className="flex flex-col">
+                                  <span className="font-semibold">
+                                    {address?.name}
+                                  </span>
+                                  <span className="text-sm text-black/60">
+                                    {address?.address}, {address?.city},{" "}
+                                    {address?.zip}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </RadioGroup>
+
+                          <Button variant="outline" className="w-full mt-4">
+                            Add New Address +
+                          </Button>
+                        </div>
+                      </SheetContent>
+                    </Sheet>
+                  </div>
                 </div>
 
-                {/* Order summary mobile view */}
-                <div className="md:hidden fixed bottom-0 left-0 w-full bg-white">
-                  <div className="bg-white p-4 rounded-lg border mx-4">
-                    <h2>Order summary</h2>
+                {/* Mobile Order Summary */}
+                <div className="md:hidden fixed bottom-0 left-0 w-full bg-white border-t shadow-lg">
+                  <div className="p-4 space-y-3">
+                    {/* Top Row (Subtotal + Total) */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Subtotal</span>
+                      <PriceFormatter amount={getSubTotalPrice()} />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Discount</span>
+                      <PriceFormatter amount={getTotalDiscount()} />
+                    </div>
+
+                    <Separator />
+
+                    {/* Total */}
+                    <div className="flex items-center justify-between font-semibold text-lg">
+                      <span>Total</span>
+                      <PriceFormatter
+                        className="text-lg font-bold text-black"
+                        amount={getTotalPrice()}
+                      />
+                    </div>
+
+                    {/* Checkout Button */}
+                    <Button
+                      className="w-full bg-shop_dark_green/80 hover:bg-shop_dark_green rounded-full font-semibold tracking-wide hoverEffect"
+                      disabled={loading}
+                      onClick={handleCheckout}
+                    >
+                      {loading ? "Please wait..." : "Proceed to checkout"}
+                    </Button>
                   </div>
                 </div>
               </div>
-              <CartResetAlert
+              <ResetAlert
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                resetCart={resetCart}
+                onReset={resetCart}
+                title="Reset Your Cart?"
+                details="Are you sure you want to reset your cart? This action cannot be undone."
               />
             </>
           ) : (
