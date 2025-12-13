@@ -81,7 +81,7 @@ const OrderDetailDialog: React.FC<OrderDetailsDialogProps> = ({
                       alt="productImage"
                       width={50}
                       height={50}
-                      unoptimized
+                      
                       className="border rounded-sm"
                     />
                   )}

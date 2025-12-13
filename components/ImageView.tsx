@@ -48,7 +48,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
               width={700}
               height={700}
               priority
-              unoptimized
+              
               className={`w-full h-96 max-h-[550px] min-h-[500px] object-contain group-hover:scale-110 hoverEffect rounded-md ${
                 isStock === 0 ? "opacity-50" : ""
               }`}
@@ -73,7 +73,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
                 alt={`Thumbnail ${image._key}`}
                 width={100}
                 height={100}
-                unoptimized
+                
                 className="w-full h-auto object-contain"
               />
             </button>
@@ -101,7 +101,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
                   alt={`Thumbnail ${image._key}`}
                   width={80}
                   height={80}
-                  unoptimized
+                  
                   className="w-full h-full object-contain"
                 />
               </button>
@@ -125,7 +125,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
               width={400}
               height={400}
               priority
-              unoptimized
+              
               className={`w-full h-auto object-contain group-hover:scale-110 hoverEffect rounded-md ${
                 isStock === 0 ? "opacity-50" : ""
               }`}

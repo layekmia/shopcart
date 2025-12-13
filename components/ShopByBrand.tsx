@@ -55,7 +55,7 @@ export default async function ShopByBrand() {
                 width={250}
                 height={250}
                 className="w-32 h-20 object-contain"
-                unoptimized
+                
               />
             )}
           </Link>

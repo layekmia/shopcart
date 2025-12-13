@@ -30,7 +30,7 @@ export default function HomeCategories({
                     width={500}
                     height={500}
                     className="w-full h-full object-contain hover:scale-105 hoverEffect"
-                    unoptimized
+                    
                   />
                 </Link>
               </div>
