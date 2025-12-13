@@ -470,7 +470,7 @@ export type BRANDS_QUERYResult = Array<{
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  string?: string;
+  title?: string;
   slug?: Slug;
   description?: string;
   image?: {
@@ -785,7 +785,7 @@ export type SINGLE_BLOG_QUERYResult = {
 // Query: *[_type == "blog"]{     blogcategories[]->{    ...    }  }
 export type BLOG_CATEGORIESResult = Array<{
   blogcategories: Array<{
-    title: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
+    title: string;
     _id: string;
     _type: "blogcategory";
     _createdAt: string;
