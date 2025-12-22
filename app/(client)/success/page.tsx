@@ -6,6 +6,7 @@ import { Suspense, useEffect } from "react";
 import { motion } from "motion/react";
 import { Check, Home, Package, ShoppingBag } from "lucide-react";
 import Link from "next/link";
+import Loader from "./Loader";
 
 const SuccessPageContent = () => {
   const { resetCart } = useStore();
@@ -17,6 +18,7 @@ const SuccessPageContent = () => {
       resetCart();
     }
   }, [orderNumber, resetCart]);
+
   return (
     <div className="py-5 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center mx-4">
       <motion.div
@@ -78,7 +80,7 @@ const SuccessPageContent = () => {
 
 const SuccessPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <SuccessPageContent />
     </Suspense>
   );

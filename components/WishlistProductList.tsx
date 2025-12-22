@@ -1,18 +1,20 @@
 "use client";
 
-import useStore from "@/store";
-import { useState } from "react";
-import Container from "./Container";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import { Heart, X } from "lucide-react";
-import Image from "next/image";
-import { urlFor } from "@/sanity/lib/image";
 import { Product } from "@/sanity.types";
+import { urlFor } from "@/sanity/lib/image";
+import useStore from "@/store";
+import { Heart, Trash2, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import PriceFormatter from "./PriceFormatter";
 import AddToCartButton from "./AddToCartButton";
+import Container from "./Container";
+import PriceFormatter from "./PriceFormatter";
 import ResetAlert from "./ResetAlert";
+import { Button } from "./ui/button";
+import Loader from "@/app/(client)/wishlist/Loader";
+import { useUser } from "@clerk/nextjs";
 
 export default function WishlistProductList() {
   const [visibleProducts, setVisibleProducts] = useState(7);
@@ -27,13 +29,17 @@ export default function WishlistProductList() {
   const resetFavoriteProducts = useStore(
     (state) => state.resetFavoriteProducts
   );
+  const hasHydrated = useStore((state) => state.hasHydrated);
+  const { isLoaded } = useUser();
 
   const loadMore = () => {
     setVisibleProducts((prev) => Math.min(prev + 5, favoriteProducts.length));
   };
 
+  if (!hasHydrated || !isLoaded) return <Loader />;
+
   return (
-    <Container>
+    <Container className="p-0">
       {favoriteProducts?.length > 0 ? (
         <>
           {/* MOBILE & TABLET: CARD LIST */}
@@ -43,17 +49,9 @@ export default function WishlistProductList() {
               .map((product: Product) => (
                 <div
                   key={product._id}
-                  className="flex items-center justify-between p-4 border rounded-lg shadow-sm"
+                  className="flex flex-col items-center justify-between p-4 border rounded-lg shadow-sm"
                 >
-                  <div className="flex items-center gap-3">
-                    <X
-                      onClick={() => {
-                        removeFavoriteProduct(product._id);
-                        toast.success("Product removed from wishlist");
-                      }}
-                      size={20}
-                      className="text-red-600 hover:text-red-800 cursor-pointer"
-                    />
+                  <div className="flex items-center gap-3 mb-1">
                     {product.images && (
                       <Link
                         href={`/product/${product?.slug?.current}`}
@@ -74,20 +72,32 @@ export default function WishlistProductList() {
                       <p className="text-xs text-gray-500">
                         {product.variant ? product.variant : ""}
                       </p>
-                      <PriceFormatter amount={product.price} />
+                      <div className="flex items-center gap-2">
+                        <PriceFormatter amount={product.price} />
+                        <p
+                          className={`text-sm font-medium ${
+                            (product?.stock ?? 0) > 0
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }`}
+                        >
+                          {(product?.stock ?? 0) > 0
+                            ? "In Stock"
+                            : "Out of Stock"}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2">
+                  <div className="flex border-t  justify-end items-center w-full gap-5 pt-2">
                     <AddToCartButton product={product} className="w-full" />
-                    <p
-                      className={`text-sm font-medium ${
-                        (product?.stock ?? 0) > 0
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      {(product?.stock ?? 0) > 0 ? "In Stock" : "Out of Stock"}
-                    </p>
+                    <Trash2
+                      onClick={() => {
+                        removeFavoriteProduct(product._id);
+                        toast.success("Product removed from wishlist");
+                      }}
+                      size={20}
+                      className="text-gray-800 cursor-pointer"
+                    />
                   </div>
                 </div>
               ))}
@@ -112,7 +122,7 @@ export default function WishlistProductList() {
                   .map((product: Product) => (
                     <tr key={product._id} className="border-b hover:bg-gray-50">
                       <td className="p-2 flex items-center gap-2">
-                        <X
+                        <Trash2
                           onClick={() => {
                             removeFavoriteProduct(product._id);
                             toast.success("Product removed from wishlist");

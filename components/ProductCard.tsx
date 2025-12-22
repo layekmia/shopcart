@@ -22,7 +22,7 @@ export default function ProductCard({ product }: { product: Product }) {
               loading="lazy"
               width={700}
               height={700}
-              className={`w-full h-64 object-contain overflow-hidden transition-transform bg-shop_light_bg hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
+              className={`w-full h-50 md:h-60 object-contain overflow-hidden transition-transform bg-shop_light_bg hoverEffect ${product?.stock !== 0 ? "group-hover:scale-105" : "opacity-50"}`}
             />
           </Link>
         )}

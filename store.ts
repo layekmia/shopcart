@@ -10,6 +10,7 @@ export interface CartItem {
 
 interface StoreState {
   items: CartItem[];
+  hasHydrated: boolean;
 
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
@@ -208,7 +209,12 @@ const useStore = create<StoreState>()(
           state.favoriteProducts = [];
         }),
     })),
-    { name: "cart-store" }
+    {
+      name: "cart-store",
+      onRehydrateStorage: () => (state) => {
+        if (state) state.hasHydrated = true;
+      },
+    }
   )
 );
 
