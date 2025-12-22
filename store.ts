@@ -127,6 +127,7 @@ const useStore = create<StoreState>()(
   persist(
     immer((set, get) => ({
       items: [],
+      hasHydrated: false,
 
       addItem: (product) =>
         set((state) => {
