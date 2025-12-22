@@ -15,9 +15,9 @@
   --color-darkColor: #151515;
   --color-lightColor: #52525b;
   --color-lightOrange: #fca99b;
-  --color-dark_blue:#6c7fd8;
-  --color-shop_light_text:#686e7d;
-  --color-deal-bg: #f1f3f8
+  --color-dark_blue: #6c7fd8;
+  --color-shop_light_text: #686e7d;
+  --color-deal-bg: #f1f3f8;
 }
 
 @theme inline {
@@ -137,10 +137,12 @@
   .hoverEffect {
     @apply transition-all duration-300 ease-in-out;
   }
-  button{
-    @apply hover:cursor-pointer
+  button {
+    @apply hover:cursor-pointer;
   }
 }
+
+
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none !important; /* Chrome, Safari, Opera */

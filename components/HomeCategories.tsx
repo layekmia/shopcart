@@ -24,7 +24,7 @@ export default function HomeCategories({
                 className="overflow-hidden border border-shop_orange/30 hover:border-shop_orange hoverEffect w-20 h-20 p-1"
               >
                 <Link href={`/category/${category?.slug?.current}`}>
-                  <Image
+                  <Image unoptimized
                     src={urlFor(category?.image).url()}
                     alt="categoryImage"
                     width={500}

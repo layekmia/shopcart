@@ -21,6 +21,7 @@ const BlogPage = async () => {
                 <Image
                   src={urlFor(blog?.mainImage).url()}
                   alt="blogImage"
+                  unoptimized
                   width={500}
                   height={500}
                   

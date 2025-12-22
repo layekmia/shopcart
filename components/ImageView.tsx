@@ -42,7 +42,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
             transition={{ duration: 0.5 }}
             className="w-full max-h-[550px] min-h-[450px] border border-darkColor/10 rounded-md group overflow-hidden"
           >
-            <Image
+            <Image unoptimized
               src={urlFor(active).url()}
               alt="productImage"
               width={700}
@@ -68,7 +68,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
                   : "opacity-80"
               }`}
             >
-              <Image
+              <Image unoptimized
                 src={urlFor(image).url()}
                 alt={`Thumbnail ${image._key}`}
                 width={100}
@@ -96,7 +96,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
                     : "opacity-80"
                 }`}
               >
-                <Image
+                <Image unoptimized
                   src={urlFor(image).url()}
                   alt={`Thumbnail ${image._key}`}
                   width={80}
@@ -119,7 +119,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
             transition={{ duration: 0.5 }}
             className="w-full max-w-[420px] mx-auto max-h-[450px] min-h-[350px] border border-darkColor/10 rounded-md group overflow-hidden"
           >
-            <Image
+            <Image unoptimized
               src={urlFor(active).url()}
               alt="productImage"
               width={400}

@@ -60,11 +60,11 @@ export default function WishlistProductList() {
                         className="w-16 h-16 relative shrink-0"
                       >
                         <Image
+                          unoptimized
                           src={urlFor(product.images[0]).url()}
                           alt={product?.name as string}
                           width={64}
                           height={64}
-                          
                           className="rounded-md object-contain w-full h-full"
                         />
                       </Link>
@@ -126,11 +126,11 @@ export default function WishlistProductList() {
                             className="border rounded-md group"
                           >
                             <Image
+                              unoptimized
                               src={urlFor(product.images[0]).url()}
                               alt={product?.name as string}
                               width={80}
                               height={80}
-                              
                               className="rounded-md group-hover:scale-105 hoverEffect object-contain w-20 h-20"
                             />
                           </Link>

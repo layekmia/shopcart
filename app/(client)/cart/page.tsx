@@ -136,7 +136,7 @@ export default function CartPage() {
                                 className="border p-0.5 md:p-1 rounded-md overflow-hidden group"
                                 href={`/product/${product?.slug?.current}`}
                               >
-                                <Image
+                                <Image unoptimized
                                   src={urlFor(product?.images[0]).url()}
                                   alt="Product Image"
                                   width={500}

@@ -20,6 +20,7 @@ export default async function LatestBlog() {
             {blog?.mainImage && (
               <Link href={`/blog/${blog?.slug?.current}`}>
                 <Image
+                unoptimized
                   src={urlFor(blog?.mainImage).url()}
                   alt="blogImage"
                   width={500}

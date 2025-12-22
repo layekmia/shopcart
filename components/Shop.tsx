@@ -30,6 +30,7 @@ export default function Shop({ categories, brands }: props) {
   const [selectedBrand, setSelectedBrand] = useState<string | null>(
     brandParams || null
   );
+
   const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
   const fetchProducts = async () => {

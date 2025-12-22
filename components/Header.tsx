@@ -4,13 +4,13 @@ import Container from "./Container";
 import HeaderMenu from "./HeaderMenu";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
-import SearchBar from "./SearchBar";
 import SignIn from "./SignIn";
 import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
 import WishlistIcon from "./WishlistIcon";
 import Link from "next/link";
 import { Logs } from "lucide-react";
 import { getMyOrders } from "@/sanity/queries";
+import SearchButton from "./search/SearchButton";
 
 export default async function Header() {
   const user = await currentUser();
@@ -30,7 +30,7 @@ export default async function Header() {
         </div>
         <HeaderMenu />
         <div className="w-1/3 flex items-center justify-end gap-5">
-          <SearchBar />
+          <SearchButton />
           <CartIcon />
           <WishlistIcon />
           <ClerkLoaded>

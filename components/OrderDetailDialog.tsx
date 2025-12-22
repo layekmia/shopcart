@@ -76,7 +76,7 @@ const OrderDetailDialog: React.FC<OrderDetailsDialogProps> = ({
               <TableRow key={index}>
                 <TableCell className="flex items-center gap-2">
                   {product?.product?.images && (
-                    <Image
+                    <Image unoptimized
                       src={urlFor(product?.product?.images[0]).url()}
                       alt="productImage"
                       width={50}

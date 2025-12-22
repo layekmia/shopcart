@@ -28,7 +28,7 @@ const SingleBlogPage = async ({
       <Container className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         <div className="md:col-span-3">
           {blog?.mainImage && (
-            <Image
+            <Image unoptimized
               src={urlFor(blog?.mainImage).url()}
               alt={blog.title || "Blog Image"}
               width={800}
@@ -94,7 +94,7 @@ const SingleBlogPage = async ({
                         },
                         types: {
                           image: ({ value }) => (
-                            <Image
+                            <Image unoptimized
                               alt={value.alt || ""}
                               src={urlFor(value).width(2000).url()}
                               className="w-full rounded-2xl"
@@ -222,7 +222,7 @@ const BlogLeft = async ({ slug }: { slug: string }) => {
               className="flex items-center gap-2 group"
             >
               {blog?.mainImage && (
-                <Image
+                <Image unoptimized
                   src={urlFor(blog?.mainImage).url()}
                   alt="blogImage"
                   width={100}

@@ -50,6 +50,7 @@ export default async function ShopByBrand() {
           >
             {brand?.image && (
               <Image
+              unoptimized
                 alt="brandImage"
                 src={urlFor(brand?.image).url()}
                 width={250}

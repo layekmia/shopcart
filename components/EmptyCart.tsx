@@ -30,6 +30,7 @@ export default function EmptyCart() {
             src={emptyCart}
             alt="Empty shopping cart"
             layout="fill"
+            unoptimized
             objectFit="contain"
             className="drop-shadow-lg"
           />
