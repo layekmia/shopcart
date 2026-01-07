@@ -68,10 +68,12 @@ export default async function Header() {
                 />
               </SignedIn>
               <SignedOut>
-                <Link href="/sign-in" className="text-sm font-medium">
-                  Login
-                </Link>
-              </SignedOut>
+  <SignInButton mode="modal">
+    <button className="text-sm font-medium">
+      Login
+    </button>
+  </SignInButton>
+</SignedOut>
             </ClerkLoaded>
           </div>
         </div>
