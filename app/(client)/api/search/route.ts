@@ -1,4 +1,3 @@
-// app/api/search/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
 
@@ -34,6 +33,7 @@ export async function GET(request: NextRequest) {
       count: products.length,
       query: query,
     });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Search API error:", error);
 

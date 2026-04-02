@@ -64,6 +64,7 @@ export default function CartPage() {
       } else if (data.length > 0) {
         setSelectedAddress(data[0]); // Optional: select first address if no default;
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.log("address fetching error", err.message);
     } finally {

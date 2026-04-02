@@ -122,19 +122,19 @@ async function createOrderInSanity(
     orderDate: new Date().toISOString(),
     invoice: invoice
       ? {
-          id: invoice.id,
-          number: invoice.number,
-          hosted_invoice_url: invoice.hosted_invoice_url,
-        }
+        id: invoice.id,
+        number: invoice.number,
+        hosted_invoice_url: invoice.hosted_invoice_url,
+      }
       : null,
     address: parsedAddress
       ? {
-          state: parsedAddress.state,
-          zip: parsedAddress.zip,
-          city: parsedAddress.city,
-          address: parsedAddress.address,
-          name: parsedAddress.name,
-        }
+        state: parsedAddress.state,
+        zip: parsedAddress.zip,
+        city: parsedAddress.city,
+        address: parsedAddress.address,
+        name: parsedAddress.name,
+      }
       : null,
   });
 
