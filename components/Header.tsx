@@ -11,6 +11,7 @@ import {
 import { Logs } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { getOrdersCount } from "@/actions/getOrdersCount";
 import CartIcon from "./CartIcon";
 import Container from "./Container";
 import HeaderMenu from "./HeaderMenu";
@@ -21,36 +22,37 @@ import SignIn from "./SignIn";
 import WishlistIcon from "./WishlistIcon";
 
 export default function HeaderClient() {
-  // Don't wait for Clerk - use optimistic UI
   const { isLoaded, user } = useUser();
   const { userId } = useAuth();
   const [ordersCount, setOrdersCount] = useState(0);
-  const [mounted, setMounted] = useState(false);
+  const [isLoadingCount, setIsLoadingCount] = useState(true);
 
-  // Load orders count after mount
+  // Load orders count using server action
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
     async function fetchOrdersCount() {
       if (userId) {
         try {
-          const response = await fetch(`/api/orders/count?userId=${userId}`);
-          const data = await response.json();
-          setOrdersCount(data.count || 0);
+          setIsLoadingCount(true);
+          const result = await getOrdersCount();
+          setOrdersCount(result.count);
         } catch (error) {
           console.error("Error fetching orders count:", error);
+        } finally {
+          setIsLoadingCount(false);
         }
+      } else {
+        setIsLoadingCount(false);
       }
     }
 
-    if (userId) {
+    if (isLoaded) {
       fetchOrdersCount();
     }
-  }, [userId]);
+  }, [userId, isLoaded]);
 
-  // Always render header immediately - no waiting!
-  // Show actual user data when available, otherwise show placeholder
-  const showUserInfo = mounted && isLoaded;
+  // Show loading state while fetching orders
+  const showLoading = !isLoaded || isLoadingCount;
+  const displayCount = showLoading ? 0 : ordersCount;
 
   return (
     <>
@@ -67,9 +69,8 @@ export default function HeaderClient() {
             <CartIcon />
             <WishlistIcon />
 
-            {/* Always render, but content updates when ready */}
             <div className="flex items-center gap-3">
-              {showUserInfo ? (
+              {isLoaded ? (
                 <>
                   <SignedIn>
                     <Link
@@ -77,19 +78,21 @@ export default function HeaderClient() {
                       className="group relative hover:text-shop_light_green hoverEffect"
                     >
                       <Logs />
-                      <span className="absolute -top-1 -right-1 bg-shop_dark_green text-white h-3.5 w-3.5 rounded-full text-xs font-semibold flex items-center justify-center">
-                        {ordersCount}
-                      </span>
+                      {displayCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-shop_dark_green text-white h-3.5 w-3.5 rounded-full text-xs font-semibold flex items-center justify-center">
+                          {displayCount}
+                        </span>
+                      )}
                     </Link>
                     <UserButton />
                   </SignedIn>
                   {!user && <SignIn />}
                 </>
               ) : (
-                // Show minimal placeholder while loading (no skeleton animation)
+                // Loading placeholders
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-full bg-gray-100" />
-                  <div className="h-8 w-20 rounded-md bg-gray-100" />
+                  <div className="h-8 w-8 rounded-full bg-gray-100 animate-pulse" />
+                  <div className="h-8 w-20 rounded-md bg-gray-100 animate-pulse" />
                 </div>
               )}
             </div>
@@ -97,7 +100,7 @@ export default function HeaderClient() {
         </Container>
       </header>
 
-      {/* Mobile Header - same pattern */}
+      {/* Mobile Header */}
       <header className="sticky sm:hidden top-0 z-50 bg-white/70 backdrop-blur-md mb-5">
         <div className="py-2 px-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -106,7 +109,7 @@ export default function HeaderClient() {
           </div>
           <div className="flex items-center gap-2">
             <CartIcon />
-            {showUserInfo ? (
+            {isLoaded ? (
               <ClerkLoaded>
                 <SignedIn>
                   <UserButton
@@ -120,7 +123,7 @@ export default function HeaderClient() {
                 </SignedOut>
               </ClerkLoaded>
             ) : (
-              <div className="h-7 w-7 rounded-full bg-gray-100" />
+              <div className="h-7 w-7 rounded-full bg-gray-100 animate-pulse" />
             )}
           </div>
         </div>
@@ -131,9 +134,11 @@ export default function HeaderClient() {
             <WishlistIcon />
             <Link href="/orders" className="relative">
               <Logs className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-shop_dark_green text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center">
-                {showUserInfo ? ordersCount : 0}
-              </span>
+              {displayCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-shop_dark_green text-white text-[10px] h-4 w-4 rounded-full flex items-center justify-center">
+                  {displayCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>
