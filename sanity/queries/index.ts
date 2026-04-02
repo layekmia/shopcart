@@ -23,6 +23,7 @@ const getCategories = async (quantity?: number) => {
     const { data } = await sanityFetch({
       query,
       params: quantity ? { quantity } : {},
+      // tags: ["layout", "logo"],
     });
 
     return data;
@@ -101,7 +102,6 @@ const getMyOrders = async (userId: string) => {
   }
 };
 
-
 const getAllBlogs = async (quantity: number) => {
   try {
     const { data } = await sanityFetch({
@@ -118,8 +118,7 @@ const getAllBlogs = async (quantity: number) => {
 const getSingleBlog = async (slug: string) => {
   try {
     const { data } = await sanityFetch({
-      query: SINGLE_BLOG_QUERY
-      ,
+      query: SINGLE_BLOG_QUERY,
       params: { slug },
     });
     return data ?? [];
@@ -154,7 +153,6 @@ const getBlogCategories = async () => {
   }
 };
 
-
 export {
   getCategories,
   getAllBrands,
@@ -166,5 +164,5 @@ export {
   getAllBlogs,
   getSingleBlog,
   getOthersBlog,
-  getBlogCategories
+  getBlogCategories,
 };

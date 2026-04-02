@@ -56,7 +56,7 @@ export default function CartProductCard({
                       {product?.name}
                     </h2>
                     <p className="text-sm capitalize">
-                      Variant:{" "}
+                       Variant:{" "}
                       <span className="font-semibold">{product?.variant}</span>
                     </p>
                     <p className="text-sm capitalize">
