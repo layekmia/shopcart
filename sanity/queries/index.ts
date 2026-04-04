@@ -1,15 +1,14 @@
 import { sanityFetch } from "../lib/live";
 import {
+  BLOG_CATEGORIES,
   BRAND_QUERY,
   BRANDS_QUERY,
   DEAL_PRODUCTS,
-  LATEST_BLOG_QUERY,
-  MY_ORDERS_QUERY,
-  PRODUCT_BY_SLUG_QUERY,
   GET_ALL_BLOG,
-  SINGLE_BLOG_QUERY,
+  LATEST_BLOG_QUERY,
   OTHERS_BLOG_QUERY,
-  BLOG_CATEGORIES,
+  PRODUCT_BY_SLUG_QUERY,
+  SINGLE_BLOG_QUERY
 } from "./query";
 
 const getCategories = async (quantity?: number) => {
@@ -89,18 +88,6 @@ const getBrand = async (slug: string) => {
   }
 };
 
-const getMyOrders = async (userId: string) => {
-  try {
-    const orders = await sanityFetch({
-      query: MY_ORDERS_QUERY,
-      params: { userId },
-    });
-    return orders?.data || null;
-  } catch (error) {
-    console.error("Error fetching product by ID:", error);
-    return null;
-  }
-};
 
 const getAllBlogs = async (quantity: number) => {
   try {
@@ -154,15 +141,6 @@ const getBlogCategories = async () => {
 };
 
 export {
-  getCategories,
-  getAllBrands,
-  getLatestBlogs,
-  getDealProducts,
-  getProductBySlug,
-  getBrand,
-  getMyOrders,
-  getAllBlogs,
-  getSingleBlog,
-  getOthersBlog,
-  getBlogCategories,
+  getAllBlogs, getAllBrands, getBlogCategories, getBrand, getCategories, getDealProducts, getLatestBlogs,  getOthersBlog, getProductBySlug, getSingleBlog
 };
+

@@ -19,9 +19,6 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
   const [selectedOrder, setSelectedOrder] = useState<
     MY_ORDERS_QUERYResult[number] | null
   >(null);
-  const handleDelete = () => {
-    toast.error("Delete method applied for Admin");
-  };
   return (
     <>
       <TableBody>
@@ -71,18 +68,6 @@ const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
                         {order?.invoice ? order?.invoice?.number : "----"}
                       </p>
                     )}
-                  </TableCell>
-                  <TableCell
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      handleDelete();
-                    }}
-                    className="flex items-center justify-center group"
-                  >
-                    <X
-                      size={20}
-                      className="group-hover:text-shop_dark_green hoverEffect"
-                    />
                   </TableCell>
                 </TableRow>
               </TooltipTrigger>
