@@ -1,9 +1,10 @@
 "use client";
 
+import Loader from "@/app/(client)/wishlist/Loader";
 import { Product } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import useStore from "@/store";
-import { Heart, Trash2, X } from "lucide-react";
+import { Heart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,30 +14,30 @@ import Container from "./Container";
 import PriceFormatter from "./PriceFormatter";
 import ResetAlert from "./ResetAlert";
 import { Button } from "./ui/button";
-import Loader from "@/app/(client)/wishlist/Loader";
-import { useUser } from "@clerk/nextjs";
+// import { useUser } from "@clerk/nextjs";
 
 export default function WishlistProductList() {
   const [visibleProducts, setVisibleProducts] = useState(7);
   const [isOpen, setIsOpen] = useState(false);
 
   const favoriteProducts: Product[] = useStore(
-    (state) => state.favoriteProducts
+    (state) => state.favoriteProducts,
   );
   const removeFavoriteProduct = useStore(
-    (state) => state.removeFavoriteProduct
+    (state) => state.removeFavoriteProduct,
   );
   const resetFavoriteProducts = useStore(
-    (state) => state.resetFavoriteProducts
+    (state) => state.resetFavoriteProducts,
   );
   const hasHydrated = useStore((state) => state.hasHydrated);
-  const { isLoaded } = useUser();
+  // const { isLoaded } = useUser();
 
   const loadMore = () => {
     setVisibleProducts((prev) => Math.min(prev + 5, favoriteProducts.length));
   };
 
-  if (!hasHydrated || !isLoaded) return <Loader />;
+  // if (!hasHydrated || !isLoaded) return <Loader />;
+  if (!hasHydrated) return <Loader />;
 
   return (
     <Container className="p-0">

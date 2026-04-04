@@ -1,14 +1,21 @@
+"use client";
+
 import Container from "@/components/Container";
 import NoAccess from "@/components/NoAccess";
 import WishlistProductList from "@/components/WishlistProductList";
-import { currentUser } from "@clerk/nextjs/server";
+import { authClient } from "@/lib/auth-client";
+import Loader from "./Loader";
 
-export default async function page() {
-  const user = await currentUser();
+export default function WishlistPage() {
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <>
-      {user ? (
+      {session ? (
         <Container className="py-10 ">
           {/* PAGE HEADING */}
           <div className="mb-8 text-center md:text-left">

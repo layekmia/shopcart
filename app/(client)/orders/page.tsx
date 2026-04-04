@@ -4,19 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { auth } from "@/lib/auth";
 import { getMyOrders } from "@/sanity/queries";
-import { auth } from "@clerk/nextjs/server";
 import { FileX } from "lucide-react";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 const OrdersPage = async () => {
-  const { userId } = await auth();
-  if (!userId) {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session?.user?.id) {
     return redirect("/");
   }
 
-  const orders = await getMyOrders(userId);
+  const orders = await getMyOrders(session?.user?.id);
 
   return (
     <div>
