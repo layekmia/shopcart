@@ -18,10 +18,35 @@ const OrdersPage = async () => {
     return redirect("/");
   }
 
-  // Fetch orders for this user based on clerkUserId or email
   const fetchOrders = async () => {
     try {
-      const query = `*[_type == "order" && (clerkUserId == $userId || email == $email)] | order(orderDate desc)`;
+      const query = `*[_type == "order" && (clerkUserId == $userId || email == $email)] | order(orderDate desc) {
+      _id,
+      orderNumber,
+      orderDate,
+      customerName,
+      email,
+      totalPrice,
+      currency,
+      amountDiscount,
+      status,
+      invoice {
+        id,
+        number,
+        hosted_invoice_url
+      },
+      products[] {
+        quantity,
+        product-> {
+          _id,
+          name,
+          price,
+          images
+        }
+      },
+      address
+    }`;
+
       const orders = await realtimeClient.fetch(query, {
         userId: session.user.id,
         email: session.user.email,

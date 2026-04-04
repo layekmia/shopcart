@@ -1,6 +1,10 @@
 "use client";
 
 import { MY_ORDERS_QUERYResult } from "@/sanity.types";
+import { format } from "date-fns";
+import { useState } from "react";
+import OrderDetailDialog from "./OrderDetailDialog";
+import PriceFormatter from "./PriceFormatter";
 import { TableBody, TableCell, TableRow } from "./ui/table";
 import {
   Tooltip,
@@ -8,17 +12,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import PriceFormatter from "./PriceFormatter";
-import { format } from "date-fns";
-import { X } from "lucide-react";
-import { useState } from "react";
-import OrderDetailDialog from "./OrderDetailDialog";
-import toast from "react-hot-toast";
 
 const OrdersComponent = ({ orders }: { orders: MY_ORDERS_QUERYResult }) => {
   const [selectedOrder, setSelectedOrder] = useState<
     MY_ORDERS_QUERYResult[number] | null
   >(null);
+
   return (
     <>
       <TableBody>
