@@ -47,10 +47,16 @@ export default async function Header() {
             <MobileMenu />
             <Logo className="w-24" />
           </div>
-          {!session && (
+          {!session ? (
             <div className="ml-4">
               <AuthForm />
             </div>
+          ) : (
+            <UserDropdown
+              name={session?.user?.name}
+              email={session?.user?.email}
+              image={session?.user?.image}
+            />
           )}
         </div>
 
@@ -58,6 +64,7 @@ export default async function Header() {
           <SearchButton />
           <div className="flex items-center gap-3">
             <WishlistIcon />
+            <CartIcon />
           </div>
         </div>
       </header>
